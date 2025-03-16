@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripNext Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #f97316; /* Orange */
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-left {
+            display: flex;
+            align-items: flex-end;
+        }
+        .header-right {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .search-container input[type="text"] {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+        .search-container button {
+            padding: 10px;
+            background-color: #f97316;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .content-container {
+            padding: 20px;
+            margin-top: 0; /* Adjusted margin */
+        }
+        .box-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Spacing between boxes */
+        }
+        .box {
+            background-color: white;
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: left; /* Left-aligned text */
+            border-radius: 10px; /* Softened borders */
+        }
+        .box img {
+            width: 100%;
+            border-radius: 10px; /* Softened corners for images */
+        }
+        .button-container {
+            text-align: center; /* Centered button */
+            margin-top: 10px;
+        }
+        .box button {
+            background-color: #f97316; /* Button color matching header */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .footer {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        /* New styles for Themes section */
+        .themes-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .theme-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            width: 200px;
+            text-align: left; /* Left-aligned text */
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .theme-box:hover {
+            transform: translateY(-10px); /* Move up on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+        }
+        .theme-box img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .exciting-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .exciting-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            width: 200px;
+            text-align: left; /* Left-aligned text */
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .exciting-box:hover {
+            transform: translateY(-10px); /* Move up on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+        }
+        .exciting-box img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <h1>TripNext Dashboard</h1>
+            <h5><b><u>Your Adventure Awaits</u></b></h5>
+        </div>
+        <div class="header-right">
+            <a href="contact.html" style="color: white;">Contact Us</a>
+        </div>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Search...">
+        <button>Search</button>
+    </div>
+    <div class="heading">
+       <h2><b>Top Trending Destination!!!!</b></h2> 
+    </div>
+    <div class="content-container">
+        <div class="box-container">
+            <div class="box">
+                <h2>Agra</h2>
+                <img src="agra.jpg" alt="Agra Image">
+                <p>Did you know? Agra is home to the magnificent Taj Mahal, one of the Seven Wonders of the World. Built by Emperor Shah Jahan in memory of his beloved wife Mumtaz Mahal, this marble masterpiece attracts millions of visitors each year. Agra’s rich history, stunning Mughal architecture, and vibrant culture make it a must-visit destination!</p>
+                <div class="button-container">
+                    <button>Learn More</button>
+                </div>
+            </div>
+            <div class="box">
+                <h2>Kerala</h2>
+                <img src="kerala.jpg" alt="Kerala Image">
+                <p>Known as "God's Own Country," Kerala is famous for its lush greenery, serene backwaters, and diverse wildlife. This southwestern state is a haven for nature lovers and adventure seekers alike. With its rich cultural heritage, traditional dance forms like Kathakali, and delectable cuisine, Kerala offers a unique and enchanting experience for every traveler.</p>
+                <div class="button-container">
+                    <button>Learn More</button>
+                </div>
+            </div>
+            <div class="box">
+                <h2>Mumbai</h2>
+                <img src="mumbai.jpg" alt="Mumbai Image">
+                <p>Mumbai, the financial capital of India, is known for its fast-paced lifestyle, iconic landmarks like the Gateway of India, and Bollywood, the world's largest film industry. From bustling markets to serene marine drives, Mumbai offers a dynamic mix of culture, history, and modernity.</p>
+                <div class="button-container">
+                    <button>Learn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="heading">
+       <h2><b>Themes.......</b></h2> 
+    </div>
+    <div class="themes-container">
+        <!-- Adding the first theme box -->
+        <div class="theme-box">
+            <img src="Screenshot 2025-02-28 141237.png" alt="River Rafting Theme">
+            <h3>River Rafting</h3>
+            <p>Embark on a thrilling river rafting adventure! Ride the rapids, feel the rush, and take in breathtaking views. Perfect for adventure seekers and nature lovers alike, river rafting is an unforgettable experience!</p>
+        </div>
+        <!-- Adding the second theme box -->
+        <div class="theme-box">
+            <img src="ecc5c4bd-a613-4223-b544-b8542992459f.jpg" alt="Wildlife Sanctuary Theme">
+            <h3>Wildlife Sanctuary</h3>
+            <p>Explore the wonders of wildlife sanctuaries! Discover exotic animals in their natural habitats, witness stunning landscapes, and experience the beauty of biodiversity. Perfect for nature enthusiasts and wildlife lovers, a visit to a wildlife sanctuary promises an unforgettable adventure.</p>
+        </div>
+        <!-- Adding the third theme box -->
+        <div class="theme-box">
+            <img src="9ee38277-2ac8-46c6-b24e-93fbf57bc392.jpg" alt="Paragliding Theme">
+            <h3>Paragliding</h3>
+            <p>Take to the skies with paragliding! Soar above picturesque landscapes, feel the wind in your hair, and embrace the exhilaration of flight. Ideal for adventure lovers and thrill-seekers, paragliding offers an unforgettable aerial experience.</p>
+        </div>
+        <!-- Adding the fourth theme box -->
+        <div class="theme-box">
+            <img src="87bde6f6-68cf-4a64-b3ab-632bf3952565.jpg" alt="Honeymoon Theme">
+            <h3>Honeymoon</h3>
+            <p>Discover the sweetness of Honeybook! Explore scenic honey farms, learn about beekeeping, and taste the finest honey. Perfect for nature lovers and culinary enthusiasts, Honeybook offers a delightful experience filled with sweet adventures and natural wonders.</p>
+        </div>
+        <!-- Adding the fifth theme box -->
+        <div class="theme-box">
+            <img src="f7576d04-5972-4fdf-973f-6d5d22ab3cb0.jpg" alt="Hiking Theme">
+            <h3>Hiking</h3>
+            <p>Embark on a hiking adventure! Explore scenic trails, conquer challenging terrains, and immerse yourself in nature's beauty. Perfect for outdoor enthusiasts and fitness buffs, hiking offers a rewarding experience with breathtaking views and a sense of accomplishment.</p>
+        </div>
+    </div>
+    <h2><b>Exciting ! Deals YOU can't missss....</b></h2> 
+    <div class="themes-container">
+        <!-- Adding the first theme box -->
+        <div class="theme-box">
+            <img src="udaipur 2.jpg" alt="udapur">
+            <h3><b>Udaipur</b></h3>
+            <p> ₹ 4000</p>
+            <p>Udaipur, often referred to as the "City of Lakes" or the "Venice of the East," is a beautiful city in the Indian state of Rajasthan. It is known for its rich history, stunning architecture, and picturesque landscapes.</p>
+        </div>
+         <!-- Adding the second theme box -->
+         <div class="theme-box">
+            <img src="kerala.jpg" alt="Wildlife Sanctuary Theme">
+            <h3>Kerala</h3>
+            <p>₹6000</p>
+            <p>Kerala, known as "God's Own Country," is a lush state located on the southwestern coast of India. Its vibrant culture, diverse landscapes, and rich history make it a unique destination.</p>
+        </div>
+        <!-- Adding the third theme box -->
+        <div class="theme-box">
+            <img src="manali.jpg" alt="Paragliding Theme">
+            <h3>Manali</h3>
+            <p>₹5000</p>
+            <p>Take to the skies with paragliding! Soar above picturesque landscapes, feel the wind in your hair, and embrace the exhilaration of flight. Ideal for adventure lovers and thrill-seekers, paragliding offers an unforgettable aerial experience.</p>
+        </div>
+        
+       
+    </div>
+    <div class="footer">
+        <p>@TripNext</p>
+        <p>Contact Us</p>
+        <p><b>Email - TripNext@gmail.com</b></p>
+        <p><b>Phone - 989xxxxxx</b></p>
+    </div>
+    <!-- Place this just before </body> in your main HTML file -->
+<iframe src="chatbot.html" style="position: fixed; bottom: 20px; right: 20px; width: 300px; height: 400px; border: none; z-index: 9999;"></iframe>
+
+</body>
+</html>

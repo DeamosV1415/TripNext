@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Travel - Food Guide</title>
+    <script>
+        // Sample restaurant data for different Indian cities
+        const restaurantData = {
+            "Mumbai": [
+                { name: "Leopold Cafe", cuisine: "Continental" },
+                { name: "Bademiya", cuisine: "Mughlai" },
+                { name: "The Bombay Canteen", cuisine: "Indian Fusion" },
+                { name: "Masala Library", cuisine: "Modern Indian" }
+            ],
+            "Delhi": [
+                { name: "Indian Accent", cuisine: "Modern Indian" },
+                { name: "Karim's", cuisine: "Mughlai" },
+                { name: "Big Chill", cuisine: "Italian" },
+                { name: "SodaBottleOpenerWala", cuisine: "Parsi" }
+            ],
+            "Bangalore": [
+                { name: "Airlines Hotel", cuisine: "South Indian" },
+                { name: "Truffles", cuisine: "Burgers & Fast Food" },
+                { name: "MTR", cuisine: "Traditional South Indian" },
+                { name: "Toit", cuisine: "Continental" }
+            ],
+            "Kolkata": [
+                { name: "Peter Cat", cuisine: "Anglo-Indian" },
+                { name: "6 Ballygunge Place", cuisine: "Bengali" },
+                { name: "Flurys", cuisine: "Bakery & Cafe" },
+                { name: "Mocambo", cuisine: "Continental" }
+            ]
+        };
+
+        function searchRestaurants() {
+            let city = document.getElementById("city").value;
+            let cuisineFilter = document.getElementById("cuisine").value;
+            let resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
+
+            city = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase(); // Capitalize first letter
+
+            if (restaurantData[city]) {
+                let filteredRestaurants = restaurantData[city];
+
+                if (cuisineFilter !== "all") {
+                    filteredRestaurants = filteredRestaurants.filter(r => r.cuisine === cuisineFilter);
+                }
+
+                if (filteredRestaurants.length > 0) {
+                    filteredRestaurants.forEach(restaurant => {
+                        resultsDiv.innerHTML += `<p style="font-size:16px; padding:5px; border-bottom:1px solid #ddd;"> <b>${restaurant.name}</b> - ${restaurant.cuisine}</p>`;
+                    });
+                } else {
+                    resultsDiv.innerHTML = "<p style='color:red;'>No restaurants found for selected cuisine.</p>";
+                }
+            } else {
+                resultsDiv.innerHTML = "<p style='color:red;'>No data available for this city.</p>";
+            }
+        }
+    </script>
+</head>
+<body style="font-family:Arial, sans-serif; text-align:center; padding:20px; margin:0;">
+
+    <!-- Orange Header -->
+    <div style="background-color:#FF8C00; color:white; padding:15px;">
+        <h1 style="margin:0;">Explore Restaurants & Cafés in India</h1>
+    </div>
+
+    <div style="margin-top:20px;">
+        <input type="text" id="city" placeholder="Enter an Indian city" 
+            style="padding:8px; margin:5px; border:1px solid #aaa; border-radius:4px;">
+        
+        <select id="cuisine" style="padding:8px; margin:5px; border:1px solid #aaa; border-radius:4px;">
+            <option value="all">All Cuisines</option>
+            <option value="Continental">Continental</option>
+            <option value="Mughlai">Mughlai</option>
+            <option value="Indian Fusion">Indian Fusion</option>
+            <option value="Modern Indian">Modern Indian</option>
+            <option value="Italian">Italian</option>
+            <option value="Parsi">Parsi</option>
+            <option value="South Indian">South Indian</option>
+            <option value="Burgers & Fast Food">Burgers & Fast Food</option>
+            <option value="Traditional South Indian">Traditional South Indian</option>
+            <option value="Anglo-Indian">Anglo-Indian</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Bakery & Cafe">Bakery & Cafe</option>
+        </select>
+
+        <button onclick="searchRestaurants()" 
+            style="padding:10px 15px; background-color:#28a745; color:white; border:none; border-radius:4px; cursor:pointer;">
+            Search
+        </button>
+
+        <div id="results" style="margin-top:20px; padding:10px;"></div>
+    </div>
+
+</body>
+</html>
