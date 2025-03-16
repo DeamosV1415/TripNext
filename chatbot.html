@@ -20,59 +20,45 @@
         justify-content: center;
         font-size: 24px;
         cursor: pointer;
-        transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+        transition: transform 0.3s ease;
         z-index: 9999;
       }
 
-      /* Chatbox container */
+      /* Chatbox */
       #chatbot-container {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        width: 50px; /* Initially same as button */
-        height: 50px;
+        width: 270px;
+        height: 370px;
         background: white;
-        border-radius: 50%;
+        border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: none;
+        flex-direction: column;
         overflow: hidden;
-        transition: width 0.4s ease, height 0.4s ease, border-radius 0.4s ease;
         z-index: 9999;
       }
 
-      /* Expanded chatbox */
-      #chatbot-container.active {
-        width: 270px;
-        height: 370px;
-        border-radius: 10px;
-      }
-
-      /* Chat header */
       #chat-header {
         background: #007bff;
         color: white;
         padding: 10px;
         text-align: center;
         font-size: 16px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        display: none; /* Hidden initially */
       }
 
-      /* Chat body */
       #chat-body {
         flex: 1;
         padding: 10px;
         overflow-y: auto;
-        display: none;
         height: 270px;
       }
 
-      /* Chat input */
       #chat-input {
         display: flex;
         padding: 10px;
         border-top: 1px solid #ddd;
-        display: none;
       }
 
       #user-input {
@@ -87,54 +73,20 @@
         padding: 5px 10px;
         cursor: pointer;
       }
-
-      /* Loading indicator */
-      .loading {
-        display: flex;
-        justify-content: center;
-        margin: 10px 0;
-      }
-
-      .loading-dots {
-        display: flex;
-      }
-
-      .loading-dots span {
-        width: 8px;
-        height: 8px;
-        margin: 0 2px;
-        background-color: #007bff;
-        border-radius: 50%;
-        animation: loading 1.4s infinite ease-in-out both;
-      }
-
-      .loading-dots span:nth-child(1) {
-        animation-delay: -0.32s;
-      }
-
-      .loading-dots span:nth-child(2) {
-        animation-delay: -0.16s;
-      }
-
-      @keyframes loading {
-        0%,
-        80%,
-        100% {
-          transform: scale(0);
-        }
-        40% {
-          transform: scale(1);
-        }
-      }
     </style>
   </head>
   <body>
     <!-- Chatbot button & container -->
-    <div id="chatbot-container">
-      <div id="chatbot-button">💬</div>
+    <div id="chatbot-button">💬</div>
 
+    <div id="chatbot-container">
       <div id="chat-header">Travel Assistant</div>
-      <div id="chat-body"></div>
+      <div id="chat-body">
+        <div>
+          <strong>Bot:</strong> Hello! How can I assist you with your travel
+          plans?
+        </div>
+      </div>
       <div id="chat-input">
         <input type="text" id="user-input" placeholder="Ask something..." />
         <button onclick="sendMessage()">Send</button>
@@ -142,169 +94,62 @@
     </div>
 
     <script>
-      const chatbotContainer = document.getElementById("chatbot-container");
       const chatbotButton = document.getElementById("chatbot-button");
-      const chatHeader = document.getElementById("chat-header");
+      const chatbotContainer = document.getElementById("chatbot-container");
       const chatBody = document.getElementById("chat-body");
-      const chatInput = document.getElementById("chat-input");
       const userInput = document.getElementById("user-input");
-
-      // OpenRouter API configuration for Deepseek R1
-      const OPENROUTER_API_KEY =
-        "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"; // Replace with your API key
-      const OPENROUTER_API_URL =
-        "https://openrouter.ai/api/v1/chat/completions";
-      const MODEL_NAME = "deepseek/deepseek-r1-zero:free"; // Or another Deepseek model available on OpenRouter
-
-      // Store conversation history
-      let conversationHistory = [
-        {
-          role: "system",
-          content:
-            "You are a helpful travel assistant for a website focused on travel in India. You provide information about destinations, hotels, transportation, activities, and help with travel planning. Keep responses brief and friendly.",
-        },
-      ];
 
       // Toggle Chatbot
       chatbotButton.addEventListener("click", () => {
-        chatbotContainer.classList.toggle("active");
-
-        if (chatbotContainer.classList.contains("active")) {
-          setTimeout(() => {
-            chatHeader.style.display = "block";
-            chatBody.style.display = "block";
-            chatInput.style.display = "flex";
-
-            // Show welcome message if it's the first time opening
-            if (chatBody.innerHTML === "") {
-              chatBody.innerHTML = `<div><strong>Bot:</strong> Hello! How can I assist you with your travel plans in India today?</div>`;
-            }
-          }, 300); // Delay to match transition
-        } else {
-          chatHeader.style.display = "none";
-          chatBody.style.display = "none";
-          chatInput.style.display = "none";
-        }
+        chatbotContainer.style.display =
+          chatbotContainer.style.display === "none" ? "flex" : "none";
       });
+
+      // Store conversation history
+      let conversationHistory = [
+        { role: "system", content: "You are a helpful travel assistant." },
+      ];
 
       // Listen for Enter key press
       userInput.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-          sendMessage();
-        }
+        if (event.key === "Enter") sendMessage();
       });
-
-      // Show loading indicator
-      function showLoading() {
-        const loadingElement = document.createElement("div");
-        loadingElement.className = "loading";
-        loadingElement.innerHTML = `
-                <div class="loading-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            `;
-        loadingElement.id = "loading-indicator";
-        chatBody.appendChild(loadingElement);
-        chatBody.scrollTop = chatBody.scrollHeight;
-      }
-
-      // Hide loading indicator
-      function hideLoading() {
-        const loadingElement = document.getElementById("loading-indicator");
-        if (loadingElement) {
-          loadingElement.remove();
-        }
-      }
 
       async function sendMessage() {
         let message = userInput.value.trim();
-
-        if (message === "") return;
+        if (!message) return;
 
         // Display user message
         chatBody.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
         userInput.value = "";
 
         // Update conversation history
-        conversationHistory.push({
-          role: "user",
-          content: message,
-        });
-
-        // Show loading indicator
-        showLoading();
+        conversationHistory.push({ role: "user", content: message });
 
         try {
-          // Call OpenRouter API with Deepseek R1 model
-          const response = await fetch(OPENROUTER_API_URL, {
+          const response = await fetch("http://localhost:5000/chat", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-              "HTTP-Referer": window.location.origin, // Required by OpenRouter
-              "X-Title": "Travel Assistant", // Optional - your app's name
-            },
-            body: JSON.stringify({
-              model: MODEL_NAME,
-              messages: conversationHistory,
-              temperature: 0.7,
-              max_tokens: 300,
-            }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: conversationHistory }),
           });
 
           const data = await response.json();
 
-          // Hide loading indicator
-          hideLoading();
-
-          if (data.choices && data.choices[0].message) {
-            const botResponse = data.choices[0].message.content;
-
+          if (data.reply) {
             // Add bot response to conversation history
             conversationHistory.push({
               role: "assistant",
-              content: botResponse,
+              content: data.reply,
             });
 
             // Display bot response
-            chatBody.innerHTML += `<div><strong>Bot:</strong> ${botResponse}</div>`;
+            chatBody.innerHTML += `<div><strong>Bot:</strong> ${data.reply}</div>`;
           } else {
-            // Handle error or empty response
-            chatBody.innerHTML += `<div><strong>Bot:</strong> I'm having trouble connecting right now. Please try again later.</div>`;
-            console.error("API Error:", data);
+            chatBody.innerHTML += `<div><strong>Bot:</strong> Sorry, I couldn't get a response.</div>`;
           }
         } catch (error) {
-          // Hide loading indicator
-          hideLoading();
-
-          // Display error message
-          chatBody.innerHTML += `<div><strong>Bot:</strong> Sorry, I encountered an error. Please try again later.</div>`;
-          console.error("API Error:", error);
-
-          // Fall back to basic responses for critical errors
-          const fallbackResponses = {
-            hello: "Hello! How can I assist you with your travel plans?",
-            destinations:
-              "We offer information on top travel destinations in India, including Goa, Jaipur, Kerala, and more!",
-            hotels:
-              "You can find the best hotels with us. Which city are you traveling to?",
-            transport:
-              "We provide information on flights, trains, and local transport options.",
-            activities:
-              "Explore exciting activities like trekking, sightseeing, and cultural tours!",
-            "travel plan":
-              "Tell me your preferences, and I'll suggest a customized travel itinerary for you!",
-          };
-
-          // Check if the message contains any keywords for fallback responses
-          for (const keyword in fallbackResponses) {
-            if (message.toLowerCase().includes(keyword)) {
-              chatBody.innerHTML += `<div><strong>Bot:</strong> ${fallbackResponses[keyword]}</div>`;
-              break;
-            }
-          }
+          console.error("Chatbot Error:", error);
+          chatBody.innerHTML += `<div><strong>Bot:</strong> Error connecting to the server.</div>`;
         }
 
         // Scroll to the bottom
